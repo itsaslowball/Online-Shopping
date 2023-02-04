@@ -8,6 +8,7 @@ const productRoutes = require('./routes/productsRoute');
 const { errorHandler } = require('./middlewares/errorMiddlewares');
 const usersRoutes = require('./routes/UsersRoute')
 const orderRoutes = require('./routes/orderRoute')
+const path = require('path');
 
 const app = express();
 
@@ -34,6 +35,11 @@ app.get('/api/config/paypal', (req, res) => {
 
 
 app.use(errorHandler);
+
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
+})
 
 const PORT = 8000;
 
